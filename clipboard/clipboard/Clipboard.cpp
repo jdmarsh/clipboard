@@ -13,3 +13,18 @@ std::string getClipboardData() {
     CloseClipboard();
     return clipboardText;
 }
+
+void setClipboardData(const std::string &text) {
+    if (OpenClipboard(nullptr)){
+        EmptyClipboard();
+        HGLOBAL hClipboardMemory = GlobalAlloc(GMEM_MOVEABLE, text.size() + 1);
+        if (hClipboardMemory){
+            char *hClipboardData = static_cast<char *>(GlobalLock(hClipboardMemory));
+            memcpy(hClipboardData, text.c_str(), text.size());
+            GlobalUnlock(hClipboardMemory);
+            SetClipboardData(CF_TEXT, hClipboardMemory);
+        }
+        GlobalFree(hClipboardMemory);
+    }
+    CloseClipboard();
+}
