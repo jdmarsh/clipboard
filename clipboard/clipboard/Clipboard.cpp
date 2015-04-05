@@ -6,8 +6,8 @@ std::string getClipboardFiles();
 std::string cb::getClipboardData() {
     std::string clipboardData;
     if (OpenClipboard(nullptr)) {
-        UINT formatList[2] = {CF_HDROP, CF_TEXT};
-        int format = GetPriorityClipboardFormat(formatList,2);
+        UINT formatList[2] = { CF_HDROP, CF_TEXT };
+        int format = GetPriorityClipboardFormat(formatList, 2);
         if (format > 0) {
             switch (format) {
             case CF_TEXT:
@@ -26,7 +26,6 @@ std::string cb::getClipboardData() {
 std::string getClipboardText() {
     std::string clipboardText;
     HANDLE hData = GetClipboardData(CF_TEXT);
-    hData = GetClipboardData(CF_TEXT);
     if (hData != nullptr) {
         char *hText = static_cast<char *>(GlobalLock(hData));
         if (hText != nullptr) {
@@ -40,7 +39,6 @@ std::string getClipboardText() {
 std::string getClipboardFiles() {
     std::string clipboardText;
     HANDLE hData = GetClipboardData(CF_HDROP);
-    hData = GetClipboardData(CF_HDROP);
     if (hData != nullptr) {
         HDROP hDropData = static_cast<HDROP>(GlobalLock(hData));
         int fileCount = DragQueryFile(hDropData, -1, nullptr, 0);
